@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd        http://dubbo.apache.org/schema/dubbo        http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="pay-service"/>
+
+    <dubbo:registry id="rg1" address="zookeeper://192.168.71.133:2181"/><!--配置注册中心-->
+
+    <!--    <dubbo:registry id="rg2" address="zookeeper://192.168.8.125:2181"/>&lt;!&ndash;配置注册中心&ndash;&gt;-->
+
+    <dubbo:protocol name="dubbo" port="20880"/>
+
+    <!---->
+    <dubbo:protocol name="webservice" port="8080" server="jetty"/>
+
+    <dubbo:protocol name="rest" port="8888" server="jetty"/>
+
+    <dubbo:service interface="com.gphw.dubbo.api.DemoService" ref="demoService" protocol="rest" registry="rg1"/>
+
+    <bean id="demoService" class="com.gphw.dubbo.provider.DemoServiceImpl"/>
+</beans>
